@@ -4,11 +4,58 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class OTT_PLATFORM {
+   static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ott", "root", "");
         System.out.println((con != null) ? "Success" : "failed");
+        System.out.println("Enter your Choice");
+        System.out.println("Press 1 For User Login/Signup");
+        System.out.println("Press 2 For Admin Login/signup");
+        int choice = sc.nextInt();
+        switch (choice)
+        {
+            case 1:
+                System.out.println("Press 1 for Signup");
+                System.out.println("Press 2 for Login");
+                int u_choice = sc.nextInt();
+                if(u_choice==1)
+                {
+                    System.out.println("Enter Your First Name");
+                    String f_name = sc.next();
+                    System.out.println("Enter Your Middle Name");
+                    String m_name = sc.next();
+                    System.out.println("Enter Your Last Name");
+                    String l_name = sc.next();
+
+                    long number = 0l;
+                    while (true) {
+                        System.out.println("Enter Your 10 Mobile Digit number ");
+                        number = sc.nextLong();
+
+                        if (number < 9999999999L && number > 6000000000L)
+                            break;
+                    }
+
+                    "foh".endsWith("@gmail.com");
+
+                    System.out.println("Enter Your Email ");
+                    String email = sc.next();
+                    System.out.println("Enter your Age");
+                    String Age = sc.next();
+                    System.out.println("Enter Your Password");
+                    String password = sc.next();
+                    System.out.println();
+                    //user u = new user()
+                }
+                break;
+            case 2:
+                break;
+            default:
+                System.out.println("Enter valid Choice");
+        }
 
     }
 }
@@ -21,8 +68,9 @@ class user {
     String email;
     String password;
     Long mobile_no;
+    int age;
 
-    public user(int user_id, String first_name, String middle_name, String last_name, String email, String password, Long mobile_no) {
+    public user(int user_id, String first_name, String middle_name, String last_name, String email, String password, Long mobile_no,int age) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.middle_name = middle_name;
@@ -30,6 +78,7 @@ class user {
         this.email = email;
         this.password = password;
         this.mobile_no = mobile_no;
+        this.age =age;
     }
 
     public int getUser_id() {
@@ -252,9 +301,7 @@ class Movie {
                 '}';
 
     }
-        void fun() {
-            System.out.println("hehe");
-        }
+
 }
 
 class Series {
