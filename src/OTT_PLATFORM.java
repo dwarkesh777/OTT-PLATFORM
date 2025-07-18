@@ -250,7 +250,11 @@ class Movie {
                 ", reviews=" + reviews +
                 ", videoPath='" + videoPath + '\'' +
                 '}';
+
     }
+        void fun() {
+            System.out.println("hehe");
+        }
 }
 
 class Series {
