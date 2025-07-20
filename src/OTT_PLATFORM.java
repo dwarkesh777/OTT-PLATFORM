@@ -8,7 +8,7 @@ public class OTT_PLATFORM {
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws SQLException {
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ott1", "root", "");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ott", "root", "");
         System.out.println((con != null) ? "Success" : "failed");
         HashMap<Long, user> hm = new HashMap<>();
         user u1 = new user(7859988312l, "d", "s", "s", "D@gmail.com", "Dwarkesh@123", 7859988312l, 18);
@@ -146,7 +146,7 @@ public class OTT_PLATFORM {
                     hm.put(user_id, u);
                     System.out.println("User Registered: " + u);
 
-                    String sql10 = "INSERT INTO user1(user_id, first_name, middle_name, last_name, email, password, mobile_no) " +
+                    String sql10 = "INSERT INTO user(user_id, first_name, middle_name, last_name, email, password, mobile_no) " +
                             "VALUES(" + user_id + ",'" + f_name + "','" + m_name + "','" + l_name + "','" + email + "','" + password + "'," + number + ")";
                     Statement s = con.createStatement();
                     s.executeUpdate(sql10);
