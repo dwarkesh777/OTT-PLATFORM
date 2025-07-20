@@ -9,14 +9,15 @@ public class OTT_PLATFORM {
     public static void main(String[] args) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ott", "root", "");
         System.out.println((con != null) ? "Success" : "failed");
-        HashMap<String,user> hm = new HashMap<>();
+        HashMap<String, user> hm = new HashMap<>();
+        user u1 = new user("7859988312dsott24", "d", "s", "s", "D@gmail.com", "Dwarkesh@123", 7859988312l, 18);
+        hm.put("7859988312dsdott24", u1);
         System.out.println("Enter your Choice");
         System.out.println("Press 1 For User Login/Signup");
         System.out.println("Press 2 For Admin Login/signup");
         int choice = sc.nextInt();
         switch (choice) {
             case 1:
-
                 System.out.println("Press 1 for Signup");
                 System.out.println("Press 2 for Login");
                 int u_choice = sc.nextInt();
@@ -30,7 +31,7 @@ public class OTT_PLATFORM {
                     long number;
                     while (true) {
                         System.out.println("Enter Your 10 Mobile Digit number ");
-                         number = sc.nextLong();
+                        number = sc.nextLong();
 
                         if (number < 9999999999L && number > 6000000000L)
                             break;
@@ -38,14 +39,14 @@ public class OTT_PLATFORM {
                     String email;
                     while (true) {
                         System.out.println("Enter Your Email ");
-                         email = sc.next();
+                        email = sc.next();
                         if (email.endsWith("@gmail.com"))
                             break;
                     }
                     int age;
                     while (true) {
                         System.out.println("Enter your Age");
-                         age = sc.nextInt();
+                        age = sc.nextInt();
                         if (age > 0)
                             break;
                     }
@@ -76,21 +77,28 @@ public class OTT_PLATFORM {
                         } else {
                             System.out.println("❌ Weak password. Must be at least 8 characters, and include uppercase, lowercase, number, and special symbol.");
                         }
-                        String user_id =number+f_name+number%2+"OTT24";
-                        hm.put(user_id,new user(user_id,f_name,m_name,l_name,email,password,number,age));
+                        String user_id = number + f_name + number % 2 + "OTT24";
+                        hm.put(user_id, new user(user_id, f_name, m_name, l_name, email, password, number, age));
+                        System.out.println(hm);
                     }
-                    System.out.println(hm);
+
                     break;
 
                 }
+            case 2:
+                System.out.println("Enter your User ID:");
+                String userId = sc.next();
 
-                    case 2:
-                        break;
+                System.out.println("Enter your Password:");
+                String enteredPassword = sc.next();
+
+                // Check if user exists in the HashMap
+
         }
 
     }
-
-    static class user {
+}
+     class user {
         String user_id;
         String first_name;
         String middle_name;
@@ -109,6 +117,9 @@ public class OTT_PLATFORM {
             this.password = password;
             this.mobile_no = mobile_no;
             this.age = age;
+        }
+
+        public user(String userId, String d, String s, String s1, String mail) {
         }
 
         public String getUser_id() {
@@ -649,4 +660,3 @@ public class OTT_PLATFORM {
             this.userid = userid;
         }
     }
-}
