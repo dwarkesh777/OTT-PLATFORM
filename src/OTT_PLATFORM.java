@@ -1,8 +1,6 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 public class OTT_PLATFORM {
     static Scanner sc = new Scanner(System.in);
@@ -180,97 +178,131 @@ public class OTT_PLATFORM {
             }
 
             if (choice == 2) {
-                System.out.println("⚙️ 1. Admin sign up ");
-                System.out.println("⚙️ 2. Admin log in ");
-                System.out.println("⚙️ 3. exit ");
-                int A_choice = sc.nextInt();
+                while (true) {
+                    System.out.println("⚙️ 1. Admin sign up ");
+                    System.out.println("⚙️ 2. Admin log in ");
+                    System.out.println("⚙️ 3. Exit ");
+                    System.out.print("Enter your choice: ");
+                    int A_choice = sc.nextInt();
 
-                if (A_choice == 1) {
-                    System.out.println("Enter full name");
-                    String name = sc.next();
+                    if (A_choice == 1) {
+                        // ✅ Admin Signup
+                        System.out.println("Enter full name:");
+                        String name = sc.next();
 
-                    long number1;
-                    while (true) {
-                        System.out.println("Enter Your 10 Mobile Digit number ");
-                        number1 = sc.nextLong();
-                        if (number1 >= 6000000000L && number1 <= 9999999999L)
-                            break;
-                        else
-                            System.out.println("❌ Invalid number!");
-                    }
-
-                    String email1;
-                    while (true) {
-                        System.out.println("Enter Your Email ");
-                        email1 = sc.next();
-                        if (email1.endsWith("@gmail.com"))
-                            break;
-                        else
-                            System.out.println("❌ Email must end with @gmail.com");
-                    }
-
-                    String password1;
-                    while (true) {
-                        System.out.print("Enter your password: ");
-                        password1 = sc.next();
-                        if (password1.length() < 8) {
-                            System.out.println("❌ Too short.");
-                            continue;
+                        long number1;
+                        while (true) {
+                            System.out.println("Enter Your 10-digit Mobile Number: ");
+                            number1 = sc.nextLong();
+                            if (number1 >= 6000000000L && number1 <= 9999999999L)
+                                break;
+                            else
+                                System.out.println("❌ Invalid number!");
                         }
 
-                        boolean hasUpper1 = false, hasLower1 = false, hasDigit1 = false, hasSpecial1 = false;
-
-                        for (char ch : password1.toCharArray()) {
-                            if (Character.isUpperCase(ch)) hasUpper1 = true;
-                            else if (Character.isLowerCase(ch)) hasLower1 = true;
-                            else if (Character.isDigit(ch)) hasDigit1 = true;
-                            else if ("@#$%^&*!".indexOf(ch) >= 0) hasSpecial1 = true;
+                        String email1;
+                        while (true) {
+                            System.out.println("Enter Your Email: ");
+                            email1 = sc.next();
+                            if (email1.endsWith("@gmail.com"))
+                                break;
+                            else
+                                System.out.println("❌ Email must end with @gmail.com");
                         }
 
-                        if (hasUpper1 && hasLower1 && hasDigit1 && hasSpecial1) {
-                            System.out.println("✅ Strong password!");
-                            break;
-                        } else {
-                            System.out.println("❌ Weak password.");
+                        String password1;
+                        while (true) {
+                            System.out.print("Enter your password: ");
+                            password1 = sc.next();
+                            if (password1.length() < 8) {
+                                System.out.println("❌ Too short.");
+                                continue;
+                            }
+
+                            boolean hasUpper1 = false, hasLower1 = false, hasDigit1 = false, hasSpecial1 = false;
+                            for (char ch : password1.toCharArray()) {
+                                if (Character.isUpperCase(ch)) hasUpper1 = true;
+                                else if (Character.isLowerCase(ch)) hasLower1 = true;
+                                else if (Character.isDigit(ch)) hasDigit1 = true;
+                                else if ("@#$%^&*!".indexOf(ch) >= 0) hasSpecial1 = true;
+                            }
+
+                            if (hasUpper1 && hasLower1 && hasDigit1 && hasSpecial1) {
+                                System.out.println("✅ Strong password!");
+                                break;
+                            } else {
+                                System.out.println("❌ Weak password.");
+                            }
+                        }
+
+                        long Admin_id1 = number1;
+                        Admin a1 = new Admin(Admin_id1, name, email1, password1);
+                        hmu.put(Admin_id1, a1);
+
+                        // Insert into DB
+                        try {
+                            String sql10 = "INSERT INTO admin VALUES(" + Admin_id1 + ",'" + name + "','" + email1 + "','" + password1 + "')";
+                            Statement s = con.createStatement();
+                            s.executeUpdate(sql10);
+                            System.out.println("✅ Admin Registered & Added to DB.");
+                        } catch (Exception e) {
+                            System.out.println("❌ Error inserting into admin table: " + e.getMessage());
                         }
                     }
 
-                    long Admin_id1= number1;
-                    //user u = new user(user_id, f_name, m_name, l_name, email, password, number, age);
-                    //hm.put(user_id, u);
-                    //System.out.println("User Registered: " + u);
-                    Admin a1 = new Admin(Admin_id1,name,email1,password1);
-                    String sql10 = "INSERT INTO admin " +
-                            "VALUES(" + Admin_id1 + ",'" + name + "','" + email1 + "','" + password1 + "')";
-                    Statement s = con.createStatement();
-                    s.executeUpdate(sql10);
-                    System.out.println("Added in Table");
+                    else if (A_choice == 2) {
+                        // ✅ Load admins from DB first
+                        hmu.clear();
+                        try {
+                            Statement stmt = con.createStatement();
+                            ResultSet rs = stmt.executeQuery("SELECT * FROM admin");
+                            while (rs.next()) {
+                                long id = rs.getLong("admin_id");
+                                String name = rs.getString("admin_name");
+                                String email = rs.getString("admin_email");
+                                String password = rs.getString("admin_password");
+                                Admin adminObj = new Admin(id, name, email, password);
+                                hmu.put(id, adminObj);
+                            }
+                        } catch (Exception e) {
+                            System.out.println("❌ Error loading admin data: " + e.getMessage());
+                        }
+
+                        // 🧠 Login Logic
+                        System.out.println("Enter Your Email:");
+                        String mail1 = sc.next();
+                        System.out.println("Enter Your Password:");
+                        String pass1 = sc.next();
+
+                        int otp2 = 100000 + new Random().nextInt(900000);
+                        System.out.println("🔐 OTP Sent: " + otp2);
+                        System.out.print("Enter OTP: ");
+                        int entered = sc.nextInt();
+
+                        boolean found = false;
+                        for (Admin a1 : hmu.values()) {
+                            if (a1.getEmail().equals(mail1) && a1.getAdmin_password().equals(pass1) && otp2 == entered) {
+                                System.out.println("✅ Login successful. Welcome, " + a1.admin_name);
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found) {
+                            System.out.println("❌ Invalid credentials or OTP!");
+                        }
+                    }
+
+                    else if (A_choice == 3) {
+                        break;
+                    }
+
+                    else {
+                        System.out.println("❌ Invalid choice. Try again.");
+                    }
                 }
 
-                if (A_choice == 2) {
-                    System.out.println("Enter Your Email:");
-                    String mail1 = sc.next();
-                    System.out.println("Enter Your Password:");
-                    String pass1 = sc.next();
-                    int otp = 100000 + new Random().nextInt(900000);
-                    System.out.println("🔐 OTP Sent: " + otp);
-                    System.out.print("Enter OTP: ");
-                    int entered = sc.nextInt();
-
-                    boolean found = false;
-                    for (Admin a : hmu.values()) {
-                        if (a.getEmail().equals(mail1) && a.getAdmin_password().equals(pass1)&&(otp==entered)) {
-                            System.out.println("✅ Login successful. Welcome, " + a.admin_name);
-
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        System.out.println("❌ Invalid credentials!");
-                    }
             }
-        }
 
     }
 }}
