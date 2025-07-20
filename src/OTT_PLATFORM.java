@@ -11,6 +11,7 @@ public class OTT_PLATFORM {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ott", "root", "");
         System.out.println((con != null) ? "Success" : "failed");
         HashMap<Long, user> hm = new HashMap<>();
+        HashMap<Long,Admin> hmu = new HashMap<>();
         user u1 = new user(7859988312l, "d", "s", "s", "D@gmail.com", "Dwarkesh@123", 7859988312l, 18);
         hm.put(7859988312l, u1);
         System.out.println(hm);
@@ -24,42 +25,42 @@ public class OTT_PLATFORM {
         String sql2 ="CREATE TABLE IF NOT EXISTS episode (episodeID INT(10) AUTO_INCREMENT PRIMARY KEY, seriesID INT(10), title VARCHAR(30)  , episodeNO INT(10), video_path LONGTEXT  , duration VARCHAR(30))";
         Statement st2 = con.createStatement();
         int r2 = st2.executeUpdate(sql2);
-        System.out.println("created episode");
+       // System.out.println("created episode");
 
         String sql3 = "CREATE TABLE IF NOT EXISTS history ( his_ID INT(10) PRIMARY KEY AUTO_INCREMENT, time VARCHAR(30), user_id INT(10), date DATE)";
         Statement st3 = con.createStatement();
         int r3 = st3.executeUpdate(sql3);
-        System.out.println("created history");
+        //System.out.println("created history");
 
         String sql4 = "CREATE TABLE  IF NOT EXISTS login(loginID INT(10) PRIMARY KEY AUTO_INCREMENT,userID INT(10) )";
         Statement st4 = con.createStatement();
         int r4 = st3.executeUpdate(sql4);
-        System.out.println("created login");
+        //System.out.println("created login");
 
         String sql5=" CREATE TABLE IF NOT EXISTS movie ( movie_id INT(10) PRIMARY KEY AUTO_INCREMENT , movie_title VARCHAR(20) , movie_language VARCHAR(10) , category VARCHAR(10) , video_path VARCHAR(30) , duration VARCHAR(10))";
         Statement st5 = con.createStatement();
         int r5 = st4.executeUpdate(sql5);
-        System.out.println("created movie");
+       // System.out.println("created movie");
 
         String sql6="CREATE TABLE IF NOT EXISTS review( reviewID INT(10) AUTO_INCREMENT PRIMARY KEY, userID INT(10), content VARCHAR(30) ,rating INT(10), date DATE)";
         Statement st6 = con.createStatement();
         int r6 = st.executeUpdate(sql6);
-        System.out.println("created review");
+        //System.out.println("created review");
 
         String sql7 = "CREATE TABLE IF NOT EXISTS series (id INT(11) AUTO_INCREMENT PRIMARY KEY, title VARCHAR(30))";
         Statement st7 = con.createStatement();
         int r7 = st.executeUpdate(sql7);
-        System.out.println("created series");
+       // System.out.println("created series");
 
         String sql8="CREATE TABLE IF NOT EXISTS Subscription_plan ( Subscription_id INT(11) AUTO_INCREMENT PRIMARY KEY, type VARCHAR(30),Start_date DATE, end_date DATE, user_id INT(11))";
         Statement st8 = con.createStatement();
         int r8 = st.executeUpdate(sql8);
-        System.out.println("created user");
+        //System.out.println("created user");
 
         String sql9 ="CREATE TABLE IF NOT EXISTS user1 ( user_id BIGINT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(20),middle_name VARCHAR(20), last_name VARCHAR(20), email VARCHAR(50), password VARCHAR(20), mobile_no BIGINT(20))";
         Statement st9 = con.createStatement();
         int r9 = st.executeUpdate(sql9);
-        System.out.println("created subscription");
+       // System.out.println("created subscription");
 
 
         while (true) {
@@ -150,6 +151,7 @@ public class OTT_PLATFORM {
                             "VALUES(" + user_id + ",'" + f_name + "','" + m_name + "','" + l_name + "','" + email + "','" + password + "'," + number + ")";
                     Statement s = con.createStatement();
                     s.executeUpdate(sql10);
+                    System.out.println("Added in Table");
                 }
 
                 if (u_choice == 2) {
@@ -166,6 +168,7 @@ public class OTT_PLATFORM {
                     for (user u : hm.values()) {
                         if (u.getEmail().equals(mail) && u.getPassword().equals(pass)&&(otp==entered)) {
                             System.out.println("✅ Login successful. Welcome, " + u.getFirst_name());
+
                             found = true;
                             break;
                         }
@@ -177,12 +180,100 @@ public class OTT_PLATFORM {
             }
 
             if (choice == 2) {
-                System.out.println("⚙️ Admin login/signup - logic pending.");
+                System.out.println("⚙️ 1. Admin sign up ");
+                System.out.println("⚙️ 2. Admin log in ");
+                System.out.println("⚙️ 3. exit ");
+                int A_choice = sc.nextInt();
+
+                if (A_choice == 1) {
+                    System.out.println("Enter full name");
+                    String name = sc.next();
+
+                    long number1;
+                    while (true) {
+                        System.out.println("Enter Your 10 Mobile Digit number ");
+                        number1 = sc.nextLong();
+                        if (number1 >= 6000000000L && number1 <= 9999999999L)
+                            break;
+                        else
+                            System.out.println("❌ Invalid number!");
+                    }
+
+                    String email1;
+                    while (true) {
+                        System.out.println("Enter Your Email ");
+                        email1 = sc.next();
+                        if (email1.endsWith("@gmail.com"))
+                            break;
+                        else
+                            System.out.println("❌ Email must end with @gmail.com");
+                    }
+
+                    String password1;
+                    while (true) {
+                        System.out.print("Enter your password: ");
+                        password1 = sc.next();
+                        if (password1.length() < 8) {
+                            System.out.println("❌ Too short.");
+                            continue;
+                        }
+
+                        boolean hasUpper1 = false, hasLower1 = false, hasDigit1 = false, hasSpecial1 = false;
+
+                        for (char ch : password1.toCharArray()) {
+                            if (Character.isUpperCase(ch)) hasUpper1 = true;
+                            else if (Character.isLowerCase(ch)) hasLower1 = true;
+                            else if (Character.isDigit(ch)) hasDigit1 = true;
+                            else if ("@#$%^&*!".indexOf(ch) >= 0) hasSpecial1 = true;
+                        }
+
+                        if (hasUpper1 && hasLower1 && hasDigit1 && hasSpecial1) {
+                            System.out.println("✅ Strong password!");
+                            break;
+                        } else {
+                            System.out.println("❌ Weak password.");
+                        }
+                    }
+
+                    long Admin_id1= number1;
+                    //user u = new user(user_id, f_name, m_name, l_name, email, password, number, age);
+                    //hm.put(user_id, u);
+                    //System.out.println("User Registered: " + u);
+                    Admin a1 = new Admin(Admin_id1,name,email1,password1);
+                    String sql10 = "INSERT INTO admin " +
+                            "VALUES(" + Admin_id1 + ",'" + name + "','" + email1 + "','" + password1 + "')";
+                    Statement s = con.createStatement();
+                    s.executeUpdate(sql10);
+                    System.out.println("Added in Table");
+                }
+
+                if (A_choice == 2) {
+                    System.out.println("Enter Your Email:");
+                    String mail1 = sc.next();
+                    System.out.println("Enter Your Password:");
+                    String pass1 = sc.next();
+                    int otp = 100000 + new Random().nextInt(900000);
+                    System.out.println("🔐 OTP Sent: " + otp);
+                    System.out.print("Enter OTP: ");
+                    int entered = sc.nextInt();
+
+                    boolean found = false;
+                    for (Admin a : hmu.values()) {
+                        if (a.getEmail().equals(mail1) && a.getAdmin_password().equals(pass1)&&(otp==entered)) {
+                            System.out.println("✅ Login successful. Welcome, " + a.admin_name);
+
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("❌ Invalid credentials!");
+                    }
             }
         }
 
     }
-}
+}}
 class user {
     long user_id;
     String first_name;
@@ -277,23 +368,23 @@ class user {
 }
 
 class Admin {
-    int admin_id;
+    long admin_id;
     String admin_name;
     String email;
     String admin_password;
 
-    public Admin(int admin_id, String admin_name, String email, String admin_password) {
+    public Admin(long admin_id, String admin_name, String email, String admin_password) {
         this.admin_id = admin_id;
         this.admin_name = admin_name;
         this.email = email;
         this.admin_password = admin_password;
     }
 
-    public int getAdmin_id() {
+    public long getAdmin_id() {
         return admin_id;
     }
 
-    public void setAdmin_id(int admin_id) {
+    public void setAdmin_id(long admin_id) {
         this.admin_id = admin_id;
     }
 
