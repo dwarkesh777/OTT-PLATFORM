@@ -18,27 +18,27 @@ public class OTT_PLATFORM {
         //dbms part
         String sql1 =" CREATE TABLE IF NOT EXISTS admin1 ( admin_id INT(10) AUTO_INCREMENT PRIMARY KEY, admin_name VARCHAR(10), admin_email VARCHAR(20), admin_password VARCHAR(8))";
         Statement st = con.createStatement();
-        int r = st.executeUpdate(sql1);
-        System.out.println("created user");
+        int r1 = st.executeUpdate(sql1);
+      //  System.out.println("created user");
 
         String sql2 ="CREATE TABLE IF NOT EXISTS episode (episodeID INT(10) AUTO_INCREMENT PRIMARY KEY, seriesID INT(10), title VARCHAR(30)  , episodeNO INT(10), video_path LONGTEXT  , duration VARCHAR(30))";
         Statement st2 = con.createStatement();
-        int r2 = st.executeUpdate(sql2);
+        int r2 = st2.executeUpdate(sql2);
         System.out.println("created episode");
 
         String sql3 = "CREATE TABLE IF NOT EXISTS history ( his_ID INT(10) PRIMARY KEY AUTO_INCREMENT, time VARCHAR(30), user_id INT(10), date DATE)";
         Statement st3 = con.createStatement();
-        int r3 = st.executeUpdate(sql3);
+        int r3 = st3.executeUpdate(sql3);
         System.out.println("created history");
 
         String sql4 = "CREATE TABLE  IF NOT EXISTS login(loginID INT(10) PRIMARY KEY AUTO_INCREMENT,userID INT(10) )";
         Statement st4 = con.createStatement();
-        int r4 = st.executeUpdate(sql4);
+        int r4 = st3.executeUpdate(sql4);
         System.out.println("created login");
 
         String sql5=" CREATE TABLE IF NOT EXISTS movie ( movie_id INT(10) PRIMARY KEY AUTO_INCREMENT , movie_title VARCHAR(20) , movie_language VARCHAR(10) , category VARCHAR(10) , video_path VARCHAR(30) , duration VARCHAR(10))";
         Statement st5 = con.createStatement();
-        int r5 = st.executeUpdate(sql5);
+        int r5 = st4.executeUpdate(sql5);
         System.out.println("created movie");
 
         String sql6="CREATE TABLE IF NOT EXISTS review( reviewID INT(10) AUTO_INCREMENT PRIMARY KEY, userID INT(10), content VARCHAR(30) ,rating INT(10), date DATE)";
@@ -54,8 +54,12 @@ public class OTT_PLATFORM {
         String sql8="CREATE TABLE IF NOT EXISTS Subscription_plan ( Subscription_id INT(11) AUTO_INCREMENT PRIMARY KEY, type VARCHAR(30),Start_date DATE, end_date DATE, user_id INT(11))";
         Statement st8 = con.createStatement();
         int r8 = st.executeUpdate(sql8);
-        System.out.println("created subscription");
+        System.out.println("created user");
 
+        String sql9 ="CREATE TABLE IF NOT EXISTS user ( user_id BIGINT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(20),middle_name VARCHAR(20), last_name VARCHAR(20), email VARCHAR(50), password VARCHAR(20), mobile_no BIGINT(20))";
+        Statement st9 = con.createStatement();
+        int r9 = st.executeUpdate(sql9);
+        System.out.println("created subscription");
 
         System.out.println("Enter your Choice");
         System.out.println("Press 1 For User Login/Signup");
