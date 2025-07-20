@@ -56,7 +56,7 @@ public class OTT_PLATFORM {
         int r8 = st.executeUpdate(sql8);
         System.out.println("created user");
 
-        String sql9 ="CREATE TABLE IF NOT EXISTS user ( user_id BIGINT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(20),middle_name VARCHAR(20), last_name VARCHAR(20), email VARCHAR(50), password VARCHAR(20), mobile_no BIGINT(20))";
+        String sql9 ="CREATE TABLE IF NOT EXISTS user1 ( user_id BIGINT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(20),middle_name VARCHAR(20), last_name VARCHAR(20), email VARCHAR(50), password VARCHAR(20), mobile_no BIGINT(20))";
         Statement st9 = con.createStatement();
         int r9 = st.executeUpdate(sql9);
         System.out.println("created subscription");
@@ -131,7 +131,12 @@ public class OTT_PLATFORM {
                         long user_id = number;
                         hm.put(user_id, new user(user_id, f_name, m_name, l_name, email, password, number, age));
                         System.out.println(hm);
-                    }return;
+
+                        String sql10 = "INSERT INTO user1 VALUES("+user_id+",'"+f_name+"','"+m_name+"','"+l_name+"','"+email+"','"+password+"',"+number+")";
+                        Statement s = con.createStatement();
+                        int r = s.executeUpdate(sql10);
+
+                    }
                 }}while (u_choice!=3);
             }
             if(choice==2) {
