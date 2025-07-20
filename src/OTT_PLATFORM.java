@@ -157,10 +157,14 @@ public class OTT_PLATFORM {
                     String mail = sc.next();
                     System.out.println("Enter Your Password:");
                     String pass = sc.next();
+                    int otp = 100000 + new Random().nextInt(900000);
+                    System.out.println("🔐 OTP Sent: " + otp);
+                    System.out.print("Enter OTP: ");
+                    int entered = sc.nextInt();
 
                     boolean found = false;
                     for (user u : hm.values()) {
-                        if (u.getEmail().equals(mail) && u.getPassword().equals(pass)) {
+                        if (u.getEmail().equals(mail) && u.getPassword().equals(pass)&&(otp==entered)) {
                             System.out.println("✅ Login successful. Welcome, " + u.getFirst_name());
                             found = true;
                             break;
