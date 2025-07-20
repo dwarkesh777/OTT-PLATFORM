@@ -51,6 +51,12 @@ public class OTT_PLATFORM {
         int r7 = st.executeUpdate(sql7);
         System.out.println("created series");
 
+        String sql8="CREATE TABLE IF NOT EXISTS Subscription_plan ( Subscription_id INT(11) AUTO_INCREMENT PRIMARY KEY, type VARCHAR(30),Start_date DATE, end_date DATE, user_id INT(11))";
+        Statement st8 = con.createStatement();
+        int r8 = st.executeUpdate(sql8);
+        System.out.println("created subscription");
+
+
         System.out.println("Enter your Choice");
         System.out.println("Press 1 For User Login/Signup");
         System.out.println("Press 2 For Admin Login/signup");
