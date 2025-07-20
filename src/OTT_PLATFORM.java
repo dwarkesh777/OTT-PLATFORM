@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 public class OTT_PLATFORM {
@@ -12,6 +13,18 @@ public class OTT_PLATFORM {
         HashMap<String, user> hm = new HashMap<>();
         user u1 = new user("7859988312dsott24", "d", "s", "s", "D@gmail.com", "Dwarkesh@123", 7859988312l, 18);
         hm.put("7859988312dsdott24", u1);
+        System.out.println(hm);
+
+        //insert Query
+        /*String sql = "INSERT INTO USER VALUES (78,'dwarkesh','sanjaybhai','savaliya','mrdwarkesh65@gmail.com','Dwarkesh@123',7859988312)";
+        Statement st = con.createStatement();
+        int r = st.executeUpdate(sql);*/
+
+        //update Query
+        String sql = "UPDATE  user SET user_id=7859988312 WHERE first_name='dwarkesh'";
+        Statement st = con.createStatement();
+        int r = st.executeUpdate(sql);
+        System.out.println(r+" inserted");
         System.out.println("Enter your Choice");
         System.out.println("Press 1 For User Login/Signup");
         System.out.println("Press 2 For Admin Login/signup");
