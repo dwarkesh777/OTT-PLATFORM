@@ -21,10 +21,10 @@ public class OTT_PLATFORM {
         int r = st.executeUpdate(sql);*/
 
         //update Query
-        String sql = "UPDATE  user SET user_id=7859988312 WHERE first_name='dwarkesh'";
+/*        String sql = "UPDATE  user SET user_id=7859988312 WHERE first_name='dwarkesh'";
         Statement st = con.createStatement();
         int r = st.executeUpdate(sql);
-        System.out.println(r+" inserted");
+        System.out.println(r+" update");*/
         System.out.println("Enter your Choice");
         System.out.println("Press 1 For User Login/Signup");
         System.out.println("Press 2 For Admin Login/signup");
