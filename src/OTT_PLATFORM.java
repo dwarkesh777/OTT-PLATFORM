@@ -15,7 +15,7 @@ public class OTT_PLATFORM {
         System.out.println(hm);
 
         //dbms part
-        String sql1 =" CREATE TABLE IF NOT EXISTS admin1 ( admin_id INT(10) AUTO_INCREMENT PRIMARY KEY, admin_name VARCHAR(10), admin_email VARCHAR(20), admin_password VARCHAR(8))";
+        String sql1 =" CREATE TABLE IF NOT EXISTS admin ( admin_id INT(10) AUTO_INCREMENT PRIMARY KEY, admin_name VARCHAR(10), admin_email VARCHAR(20), admin_password VARCHAR(8))";
         Statement st = con.createStatement();
         int r1 = st.executeUpdate(sql1);
         //  System.out.println("created user");
@@ -190,44 +190,44 @@ public class OTT_PLATFORM {
                         System.out.println("Enter full name:");
                         String name = sc.next();
 
-                        long number1;
+                        long number;
                         while (true) {
                             System.out.println("Enter Your 10-digit Mobile Number: ");
-                            number1 = sc.nextLong();
-                            if (number1 >= 6000000000L && number1 <= 9999999999L)
+                            number= sc.nextLong();
+                            if (number >= 6000000000L && number <= 9999999999L)
                                 break;
                             else
                                 System.out.println("❌ Invalid number!");
                         }
 
-                        String email1;
+                        String email;
                         while (true) {
                             System.out.println("Enter Your Email: ");
-                            email1 = sc.next();
-                            if (email1.endsWith("@gmail.com"))
+                            email = sc.next();
+                            if (email.endsWith("@gmail.com"))
                                 break;
                             else
                                 System.out.println("❌ Email must end with @gmail.com");
                         }
 
-                        String password1;
+                        String password;
                         while (true) {
                             System.out.print("Enter your password: ");
-                            password1 = sc.next();
-                            if (password1.length() < 8) {
+                            password = sc.next();
+                            if (password.length() < 8) {
                                 System.out.println("❌ Too short.");
                                 continue;
                             }
 
-                            boolean hasUpper1 = false, hasLower1 = false, hasDigit1 = false, hasSpecial1 = false;
-                            for (char ch : password1.toCharArray()) {
-                                if (Character.isUpperCase(ch)) hasUpper1 = true;
-                                else if (Character.isLowerCase(ch)) hasLower1 = true;
-                                else if (Character.isDigit(ch)) hasDigit1 = true;
-                                else if ("@#$%^&*!".indexOf(ch) >= 0) hasSpecial1 = true;
+                            boolean hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
+                            for (char ch : password.toCharArray()) {
+                                if (Character.isUpperCase(ch)) hasUpper = true;
+                                else if (Character.isLowerCase(ch)) hasLower = true;
+                                else if (Character.isDigit(ch)) hasDigit = true;
+                                else if ("@#$%^&*!".indexOf(ch) >= 0) hasSpecial = true;
                             }
 
-                            if (hasUpper1 && hasLower1 && hasDigit1 && hasSpecial1) {
+                            if (hasUpper && hasLower && hasDigit && hasSpecial) {
                                 System.out.println("✅ Strong password!");
                                 break;
                             } else {
@@ -235,13 +235,13 @@ public class OTT_PLATFORM {
                             }
                         }
 
-                        long Admin_id1 = number1;
-                        Admin a1 = new Admin(Admin_id1, name, email1, password1);
-                        hmu.put(Admin_id1, a1);
+                        long Admin_id = number;
+                        Admin a1 = new Admin(Admin_id, name, email, password);
+                        hmu.put(Admin_id, a1);
 
                         // Insert into DB
                         try {
-                            String sql10 = "INSERT INTO admin VALUES(" + Admin_id1 + ",'" + name + "','" + email1 + "','" + password1 + "')";
+                            String sql10 = "INSERT INTO admin VALUES(" + Admin_id + ",'" + name + "','" + email + "','" + password + "')";
                             Statement s = con.createStatement();
                             s.executeUpdate(sql10);
                             System.out.println("✅ Admin Registered & Added to DB.");
