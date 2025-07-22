@@ -19,9 +19,6 @@ class user {
         this.age = age;
     }
 
-    public user(String userId, String d, String s, String s1, String mail) {
-    }
-
     public long getUser_id() {
         return user_id;
     }
