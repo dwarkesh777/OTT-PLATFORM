@@ -90,28 +90,23 @@ public class OTT_PLATFORM {
                     while (true) {
                         System.out.println("Enter Your 10 Mobile Digit number ");
                         number = sc.nextLong();
-                        if (number >= 6000000000L && number <= 9999999999L)
-                            break;
-                        else
-                            System.out.println("❌ Invalid number!");
+                        if (number >= 6000000000L && number <= 9999999999L) break;
+                        else System.out.println("❌ Invalid number!");
                     }
 
                     String email;
                     while (true) {
                         System.out.println("Enter Your Email ");
                         email = sc.next();
-                        if (email.endsWith("@gmail.com"))
-                            break;
-                        else
-                            System.out.println("❌ Email must end with @gmail.com");
+                        if (email.endsWith("@gmail.com")) break;
+                        else System.out.println("❌ Email must end with @gmail.com");
                     }
 
                     int age;
                     while (true) {
                         System.out.println("Enter your Age");
                         age = sc.nextInt();
-                        if (age > 0)
-                            break;
+                        if (age > 0) break;
                     }
 
                     String password;
@@ -145,14 +140,35 @@ public class OTT_PLATFORM {
                     hm.put(user_id, u);
                     System.out.println("User Registered: " + u);
 
-                    String sql10 = "INSERT INTO user(user_id, first_name, middle_name, last_name, email, password, mobile_no) " +
-                            "VALUES(" + user_id + ",'" + f_name + "','" + m_name + "','" + l_name + "','" + email + "','" + password + "'," + number + ")";
+                    String sql10 = "INSERT INTO user(user_id, first_name, middle_name, last_name, email, password, mobile_no) " + "VALUES(" + user_id + ",'" + f_name + "','" + m_name + "','" + l_name + "','" + email + "','" + password + "'," + number + ")";
                     Statement s = con.createStatement();
                     s.executeUpdate(sql10);
                     System.out.println("Added in Table");
                 }
 
+
                 if (u_choice == 2) {
+
+                    hm.clear();
+                    try {
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery("SELECT * FROM user");
+                        while (rs.next()) {
+                            long id = rs.getLong(1);
+                            String fname = rs.getString(2);
+                            String mname = rs.getString(3);
+                            String lname = rs.getString(4);
+                            String email = rs.getString(5);
+                            String password = rs.getString(6);
+                            long mob = rs.getLong(7);
+                            int age = rs.getInt(8);
+                            user u = new user(id,fname,mname,lname,email,password,mob,age);
+                            hm.put(id,u);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("❌ Error loading user data: " + e.getMessage());
+                    }
+
                     System.out.println("Enter Your Email:");
                     String mail = sc.next();
                     System.out.println("Enter Your Password:");
@@ -166,7 +182,36 @@ public class OTT_PLATFORM {
                     for (user u : hm.values()) {
                         if (u.getEmail().equals(mail) && u.getPassword().equals(pass) && (otp == entered)) {
                             System.out.println("✅ Login successful. Welcome, " + u.getFirst_name());
-
+                            //user code
+                            while (true)
+                            {
+                                System.out.println("1.Movie");
+                                System.out.println("2.Series");
+                                System.out.println("3.History");
+                                System.out.println("4.Top Rating Movie And Series");
+                                System.out.println("5.Subscription detail");
+                                System.out.println("6.exit");
+                                int user_choice = sc.nextInt();
+                                if (user_choice==6)
+                                {
+                                    System.out.println("Exiting");
+                                    break;
+                                } else if (user_choice==1) {
+                                    System.out.println("Thank You For selecting Movie");
+                                    String s1 = "SELECT * FROM movie";
+                                    Statement statement = con.createStatement();
+                                    ResultSet rs = statement.executeQuery(s1);
+                                    while (rs.next())
+                                    {
+                                        System.out.println("===========================");
+                                        System.out.println("ID:"+rs.getInt(1)+
+                                                "\nMovie Name:"+rs.getString(2)+"\nmovie language:"+rs.getString(3)+
+                                                "\ncategory:"+rs.getString(4)+"\nvideo_path:"+rs.getString(5)+"\nduration:"+rs.getString(6)
+                                                +"\nLike:"+rs.getInt(7));
+                                        System.out.println("===========================");
+                                    }
+                                }
+                            }
                             found = true;
                             break;
                         }
@@ -194,20 +239,16 @@ public class OTT_PLATFORM {
                         while (true) {
                             System.out.println("Enter Your 10-digit Mobile Number: ");
                             number1 = sc.nextLong();
-                            if (number1 >= 6000000000L && number1 <= 9999999999L)
-                                break;
-                            else
-                                System.out.println("❌ Invalid number!");
+                            if (number1 >= 6000000000L && number1 <= 9999999999L) break;
+                            else System.out.println("❌ Invalid number!");
                         }
 
                         String email1;
                         while (true) {
                             System.out.println("Enter Your Email: ");
                             email1 = sc.next();
-                            if (email1.endsWith("@gmail.com"))
-                                break;
-                            else
-                                System.out.println("❌ Email must end with @gmail.com");
+                            if (email1.endsWith("@gmail.com")) break;
+                            else System.out.println("❌ Email must end with @gmail.com");
                         }
 
                         String password1;
@@ -249,7 +290,7 @@ public class OTT_PLATFORM {
                             System.out.println("❌ Error inserting into admin table: " + e.getMessage());
                         }
                     } else if (A_choice == 2) {
-                        // ✅ Load admins from DB first
+                        //  Load admins from DB first
                         hmu.clear();
                         try {
                             Statement stmt = con.createStatement();
@@ -266,7 +307,7 @@ public class OTT_PLATFORM {
                             System.out.println("❌ Error loading admin data: " + e.getMessage());
                         }
 
-                        // 🧠 Login Logic
+                        //  Login Logic
                         System.out.println("Enter Your Email:");
                         String mail1 = sc.next();
                         System.out.println("Enter Your Password:");
@@ -295,37 +336,10 @@ public class OTT_PLATFORM {
                                     }
 
                                     if (moviechoice == 1) {
-                                        String[][] movies = {
-                                                {"Jawan", "Hindi", "Action", "C:/Movies/jawan.mp4", "2h45m"},
-                                                {"RRR", "Telugu", "Drama", "C:/Movies/rrr.mp4", "3h07m"},
-                                                {"KGF", "Kannada", "Action", "C:/Movies/kgf.mp4", "2h35m"},
-                                                {"Pathaan", "Hindi", "Spy", "C:/Movies/pathaan.mp4", "2h40m"},
-                                                {"Dangal", "Hindi", "Biopic", "C:/Movies/dangal.mp4", "2h49m"},
-                                                {"Bahubali", "Telugu", "Epic", "C:/Movies/bahubali.mp4", "2h58m"},
-                                                {"Pushpa", "Telugu", "Action", "C:/Movies/pushpa.mp4", "2h59m"},
-                                                {"Drishyam", "Malayalam", "Thriller", "C:/Movies/drishyam.mp4", "2h45m"},
-                                                {"Vikram", "Tamil", "Action", "C:/Movies/vikram.mp4", "2h47m"},
-                                                {"Master", "Tamil", "Drama", "C:/Movies/master.mp4", "2h43m"},
-                                                {"3 Idiots", "Hindi", "Comedy", "C:/Movies/3idiots.mp4", "2h51m"},
-                                                {"Shershaah", "Hindi", "War", "C:/Movies/shershaah.mp4", "2h18m"},
-                                                {"Article 15", "Hindi", "Crime", "C:/Movies/article15.mp4", "2h10m"},
-                                                {"Kantara", "Kannada", "Mystery", "C:/Movies/kantara.mp4", "2h27m"},
-                                                {"Gully Boy", "Hindi", "Musical", "C:/Movies/gullyboy.mp4", "2h34m"},
-                                                {"Lagaan", "Hindi", "Historical", "C:/Movies/lagaan.mp4", "3h44m"},
-                                                {"Sita Ramam", "Telugu", "Romance", "C:/Movies/sitaramam.mp4", "2h30m"},
-                                                {"Dil Bechara", "Hindi", "Romance", "C:/Movies/dilbechara.mp4", "1h41m"},
-                                                {"URI", "Hindi", "War", "C:/Movies/uri.mp4", "2h18m"},
-                                                {"Raazi", "Hindi", "Spy", "C:/Movies/raazi.mp4", "2h20m"},
-                                                {"Chhichhore", "Hindi", "Drama", "C:/Movies/chhichhore.mp4", "2h23m"},
-                                                {"The Kashmir Files", "Hindi", "Drama", "C:/Movies/kashmirfiles.mp4", "2h50m"},
-                                                {"Rocketry", "Hindi", "Biopic", "C:/Movies/rocketry.mp4", "2h38m"},
-                                                {"Super 30", "Hindi", "Biography", "C:/Movies/super30.mp4", "2h34m"},
-                                                {"Andhadhun", "Hindi", "Thriller", "C:/Movies/andhadhun.mp4", "2h19m"}
-                                        };
+                                        String[][] movies = {{"Jawan", "Hindi", "Action", "C:/Movies/jawan.mp4", "2h45m"}, {"RRR", "Telugu", "Drama", "C:/Movies/rrr.mp4", "3h07m"}, {"KGF", "Kannada", "Action", "C:/Movies/kgf.mp4", "2h35m"}, {"Pathaan", "Hindi", "Spy", "C:/Movies/pathaan.mp4", "2h40m"}, {"Dangal", "Hindi", "Biopic", "C:/Movies/dangal.mp4", "2h49m"}, {"Bahubali", "Telugu", "Epic", "C:/Movies/bahubali.mp4", "2h58m"}, {"Pushpa", "Telugu", "Action", "C:/Movies/pushpa.mp4", "2h59m"}, {"Drishyam", "Malayalam", "Thriller", "C:/Movies/drishyam.mp4", "2h45m"}, {"Vikram", "Tamil", "Action", "C:/Movies/vikram.mp4", "2h47m"}, {"Master", "Tamil", "Drama", "C:/Movies/master.mp4", "2h43m"}, {"3 Idiots", "Hindi", "Comedy", "C:/Movies/3idiots.mp4", "2h51m"}, {"Shershaah", "Hindi", "War", "C:/Movies/shershaah.mp4", "2h18m"}, {"Article 15", "Hindi", "Crime", "C:/Movies/article15.mp4", "2h10m"}, {"Kantara", "Kannada", "Mystery", "C:/Movies/kantara.mp4", "2h27m"}, {"Gully Boy", "Hindi", "Musical", "C:/Movies/gullyboy.mp4", "2h34m"}, {"Lagaan", "Hindi", "Historical", "C:/Movies/lagaan.mp4", "3h44m"}, {"Sita Ramam", "Telugu", "Romance", "C:/Movies/sitaramam.mp4", "2h30m"}, {"Dil Bechara", "Hindi", "Romance", "C:/Movies/dilbechara.mp4", "1h41m"}, {"URI", "Hindi", "War", "C:/Movies/uri.mp4", "2h18m"}, {"Raazi", "Hindi", "Spy", "C:/Movies/raazi.mp4", "2h20m"}, {"Chhichhore", "Hindi", "Drama", "C:/Movies/chhichhore.mp4", "2h23m"}, {"The Kashmir Files", "Hindi", "Drama", "C:/Movies/kashmirfiles.mp4", "2h50m"}, {"Rocketry", "Hindi", "Biopic", "C:/Movies/rocketry.mp4", "2h38m"}, {"Super 30", "Hindi", "Biography", "C:/Movies/super30.mp4", "2h34m"}, {"Andhadhun", "Hindi", "Thriller", "C:/Movies/andhadhun.mp4", "2h19m"}};
 
                                         for (String[] m : movies) {
-                                            String insertMovieSQL = "INSERT INTO movie (movie_title, movie_language, category, video_path, duration) " +
-                                                    "VALUES('" + m[0] + "','" + m[1] + "','" + m[2] + "','" + m[3] + "','" + m[4] + "')";
+                                            String insertMovieSQL = "INSERT INTO movie (movie_title, movie_language, category, video_path, duration) " + "VALUES('" + m[0] + "','" + m[1] + "','" + m[2] + "','" + m[3] + "','" + m[4] + "')";
                                             Statement stmt = con.createStatement();
                                             stmt.executeUpdate(insertMovieSQL);
                                         }
@@ -348,8 +362,7 @@ public class OTT_PLATFORM {
 
                                         if (rows > 0)
                                             System.out.println("✅ Movie ID " + movieIdToUpdate + " updated to: " + newTitle);
-                                        else
-                                            System.out.println("❌ Movie ID not found.");
+                                        else System.out.println("❌ Movie ID not found.");
                                     } else if (moviechoice == 3) {
                                         System.out.print("Enter movie ID to delete: ");
                                         int movieIdToDelete = sc.nextInt();
@@ -387,7 +400,7 @@ public class OTT_PLATFORM {
                                             System.out.println("duration : " + dur);
                                             System.out.println("---------------------------------------------------------");
                                         }
-                                    } else if (moviechoice==5) {
+                                    } else if (moviechoice == 5) {
                                         System.out.println("Exiting");
                                         break;
                                     }
@@ -413,6 +426,4 @@ public class OTT_PLATFORM {
         }
 
     }
-
-
 }

@@ -19,6 +19,7 @@ class user {
         this.age = age;
     }
 
+
     public long getUser_id() {
         return user_id;
     }
