@@ -249,10 +249,13 @@ public class OTT_PLATFORM {
                                     }
                                 } else if (user_choice==3) {
                                     System.out.println("=====================history======================");
-                                    String r = "SELECT * FROM history";
+                                    String r = "SELECT * FROM history WHERE user_id="+ u.user_id;
                                     Statement s = con.createStatement();
-
-
+                                    ResultSet rs = s.executeQuery(r);
+                                    while (rs.next())
+                                    {
+                                        System.out.println(rs.getInt(1)+"\n"+rs.getString(2)+"\n"+rs.getLong(3)+"\n"+rs.getString(4));
+                                    }
                                 }
 
 
