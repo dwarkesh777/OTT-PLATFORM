@@ -1,4 +1,7 @@
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Date;
 
@@ -173,6 +176,8 @@ public class OTT_PLATFORM {
                     String mail = sc.next();
                     System.out.println("Enter Your Password:");
                     String pass = sc.next();
+                    System.out.println("Enter mobile no");
+                    Long l = sc.nextLong();
                     int otp = 100000 + new Random().nextInt(900000);
                     System.out.println("🔐 OTP Sent: " + otp);
                     System.out.print("Enter OTP: ");
@@ -208,9 +213,49 @@ public class OTT_PLATFORM {
                                                 "\nMovie Name:"+rs.getString(2)+"\nmovie language:"+rs.getString(3)+
                                                 "\ncategory:"+rs.getString(4)+"\nvideo_path:"+rs.getString(5)+"\nduration:"+rs.getString(6)
                                                 +"\nLike:"+rs.getInt(7));
+
+                                        System.out.println("DO YOU WANT TO PLAY (Yes/No)");
+                                        String ans = sc.next();
                                         System.out.println("===========================");
+                                        Boolean  bm = ans.equalsIgnoreCase("yes");
+                                        if(bm)
+                                        {  LocalDate today = LocalDate.now();
+
+                                            // Format to YYYY-MM-DD
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                                            String formattedDate = today.format(formatter);
+
+                                            // Output
+                                            System.out.println("Current Date: " + formattedDate);
+
+                                            LocalTime currentTime = LocalTime.now();
+
+
+                                            // Format to HH:mm:ss
+                                            DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm:ss");
+                                            String formattedTime = currentTime.format(formatter1);
+                                            String s2 = "INSERT INTO history (time,user_id,date)VALUES(?,?,?) ";
+                                          PreparedStatement pst = con.prepareStatement(s2);
+                                          pst.setString(1, formattedTime);
+                                          pst.setLong(2,l);
+                                          pst.setString(3,formattedDate);
+                                          int r = pst.executeUpdate();
+                                            //  Statement t = con.createStatement();
+                                            //int r  =  t.executeUpdate(s2);
+                                            //System.out.println((r>0)?"successfuly add in history":"fail");
+
+                                        }
+
                                     }
+                                } else if (user_choice==3) {
+                                    System.out.println("=====================history======================");
+                                    String r = "SELECT * FROM history";
+                                    Statement s = con.createStatement();
+
+
                                 }
+
+
                             }
                             found = true;
                             break;
