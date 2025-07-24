@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -278,7 +279,90 @@ public class OTT_PLATFORM {
                                     {
                                         System.out.println(rs.getInt(1)+"\n"+rs.getString(2)+"\n"+rs.getLong(3)+"\n"+rs.getString(4));
                                     }
+                                }else if (user_choice == 5) {
+                                    System.out.println("----------- Subscription Section -----------");
+                                    System.out.println("1. Subscribe to a Plan");
+                                    System.out.println("2. View My Subscription");
+                                    System.out.print("Enter your choice: ");
+                                    int subChoice = sc.nextInt();
+
+                                    if (subChoice == 1) {
+                                        System.out.println("Available Plans: Basic (₹199), Premium (₹399), Ultra (₹599)");
+                                        System.out.print("Enter Plan Type: ");
+                                        String planType = sc.next();
+
+                                        double price = 0;
+                                        if (planType.equalsIgnoreCase("Basic")) {
+                                            price = 199;
+                                        } else if (planType.equalsIgnoreCase("Premium")) {
+                                            price = 399;
+                                        } else if (planType.equalsIgnoreCase("Ultra")) {
+                                            price = 599;
+                                        } else {
+                                            System.out.println("❌ Invalid plan type.");
+                                            return;
+                                        }
+
+                                        // Format current and end date as String (yyyy-MM-dd)
+                                        java.util.Date today = new java.util.Date();
+                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                        String startDate = sdf.format(today);
+
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.setTime(today);
+                                        cal.add(Calendar.DAY_OF_MONTH, 30); // Add 30 days
+                                        String endDate = sdf.format(cal.getTime());
+
+                                        try {
+                                            String insert = "INSERT INTO Subscription_plan(type, Start_date, end_date, price, user_id) VALUES (?, ?, ?, ?, ?)";
+                                            PreparedStatement pstmt = con.prepareStatement(insert);
+                                            pstmt.setString(1, planType);
+                                            pstmt.setString(2, startDate);
+                                            pstmt.setString(3, endDate);
+                                            pstmt.setDouble(4, price);
+                                            pstmt.setLong(5, no); // no = logged-in user ID
+
+                                            int rows = pstmt.executeUpdate();
+                                            if (rows > 0) {
+                                                System.out.println("✅ Subscription added successfully.");
+                                            } else {
+                                                System.out.println("❌ Failed to add subscription.");
+                                            }
+                                        } catch (SQLException e) {
+                                            System.out.println("❌ Error: " + e.getMessage());
+                                        }
+
+                                    } else if (subChoice == 2) {
+                                        try {
+                                            String query = "SELECT * FROM Subscription_plan WHERE user_id = ?";
+                                            PreparedStatement pst = con.prepareStatement(query);
+                                            pst.setLong(1, no);
+                                            ResultSet rs = pst.executeQuery();
+
+                                            boolean found1 = false;
+                                            while (rs.next()) {
+                                                found1 = true;
+                                                int id = rs.getInt("Subscription_id");
+                                                String type = rs.getString("type");
+                                                String start = rs.getString("Start_date");
+                                                String end = rs.getString("end_date");
+                                                int price = rs.getInt("price");
+
+                                                Subscription sub = new Subscription(id, no.intValue(), type, start, end, price);
+                                                System.out.println("📄 Your Subscription:");
+                                                System.out.println(sub);
+                                            }
+                                            if (!found1) {
+                                                System.out.println("❌ No active subscription found.");
+                                            }
+                                        } catch (SQLException e) {
+                                            System.out.println("❌ Error fetching subscription: " + e.getMessage());
+                                        }
+                                    } else {
+                                        System.out.println("❌ Invalid subscription option.");
+                                    }
                                 }
+
 
 
                             }

@@ -1,15 +1,34 @@
 import java.util.Date;
 class Subscription {
-    int subId, userId;
+    int subId;
+           Long userId;
     String planType;
-    Date startDate, endDate;
+    String startDate, endDate;
+    Double price;
 
-    Subscription(int subId, int userId, String planType, Date startDate, Date endDate) {
+    Subscription(int subId, long userId, String planType, String startDate, String endDate , double  price) {
         this.subId = subId;
         this.userId = userId;
         this.planType = planType;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.price=price;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public int getSubId() {
@@ -20,11 +39,11 @@ class Subscription {
         this.subId = subId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -36,21 +55,7 @@ class Subscription {
         this.planType = planType;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 
     @Override
     public String toString() {
