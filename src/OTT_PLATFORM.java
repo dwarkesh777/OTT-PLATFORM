@@ -166,8 +166,8 @@ public class OTT_PLATFORM {
                             String password = rs.getString(6);
                             long mob = rs.getLong(7);
                             int age = rs.getInt(8);
-                            user u = new user(id,fname,mname,lname,email,password,mob,age);
-                            hm.put(id,u);
+                            user u = new user(id, fname, mname, lname, email, password, mob, age);
+                            hm.put(id, u);
                         }
                     } catch (Exception e) {
                         System.out.println("❌ Error loading user data: " + e.getMessage());
@@ -190,11 +190,10 @@ public class OTT_PLATFORM {
                             System.out.println("✅ Login successful. Welcome, " + u.getFirst_name());
                             String s = "INSERT INTO login (userID)VALUES (?)";
                             PreparedStatement p = con.prepareStatement(s);
-                            p.setLong(1,no);
+                            p.setLong(1, no);
                             p.executeUpdate();
                             //user code
-                            while (true)
-                            {
+                            while (true) {
                                 System.out.println("1.Movie");
                                 System.out.println("2.Series");
                                 System.out.println("3.History");
@@ -202,29 +201,26 @@ public class OTT_PLATFORM {
                                 System.out.println("5.Subscription detail");
                                 System.out.println("6.exit");
                                 int user_choice = sc.nextInt();
-                                if (user_choice==6)
-                                {
+                                if (user_choice == 6) {
                                     System.out.println("Exiting");
                                     break;
-                                } else if (user_choice==1) {
+                                } else if (user_choice == 1) {
                                     System.out.println("Thank You For selecting Movie");
                                     String s1 = "SELECT * FROM movie";
                                     Statement statement = con.createStatement();
                                     ResultSet rs = statement.executeQuery(s1);
-                                    while (rs.next())
-                                    {
+                                    while (rs.next()) {
                                         System.out.println("===========================");
-                                        System.out.println("ID:"+rs.getInt(1)+
-                                                "\nMovie Name:"+rs.getString(2)+"\nmovie language:"+rs.getString(3)+
-                                                "\ncategory:"+rs.getString(4)+"\nvideo_path:"+rs.getString(5)+"\nduration:"+rs.getString(6)
-                                                +"\nLike:"+rs.getInt(7));
+                                        System.out.println("ID:" + rs.getInt(1) +
+                                                "\nMovie Name:" + rs.getString(2) + "\nmovie language:" + rs.getString(3) +
+                                                "\ncategory:" + rs.getString(4) + "\nvideo_path:" + rs.getString(5) + "\nduration:" + rs.getString(6)
+                                                + "\nLike:" + rs.getInt(7));
 
                                         System.out.println("DO YOU WANT TO PLAY (Yes/No)");
                                         String ans = sc.next();
                                         System.out.println("===========================");
-                                        Boolean  bm = ans.equalsIgnoreCase("yes");
-                                        if(bm)
-                                        {
+                                        Boolean bm = ans.equalsIgnoreCase("yes");
+                                        if (bm) {
                                             LocalDate today = LocalDate.now();
 
                                             // Format to YYYY-MM-DD
@@ -243,23 +239,22 @@ public class OTT_PLATFORM {
                                             String s2 = "INSERT INTO history (time,user_id,date,content_name)VALUES(?,?,?,?) ";
                                             PreparedStatement pst = con.prepareStatement(s2);
                                             pst.setString(1, formattedTime);
-                                            pst.setLong(2,no);
-                                            pst.setString(3,formattedDate);
-                                            pst.setString(4,rs.getString(2));
+                                            pst.setLong(2, no);
+                                            pst.setString(3, formattedDate);
+                                            pst.setString(4, rs.getString(2));
                                             int r = pst.executeUpdate();
                                             System.out.println("DO YOU WANT TO LIKE THIS MOVIE (Yes/No)");
                                             String ans1 = sc.next();
-                                            Boolean  bm1 = ans1.equalsIgnoreCase("yes");
-                                            if (bm1)
-                                            {
+                                            Boolean bm1 = ans1.equalsIgnoreCase("yes");
+                                            if (bm1) {
                                                 String s12 = "UPDATE movie SET like =? where movie_id=?";
-                                                int like = rs.getInt(7)+1;
-                                                int mid  = rs.getInt(1);
+                                                int like = rs.getInt(7) + 1;
+                                                int mid = rs.getInt(1);
                                                 PreparedStatement pst7 = con.prepareStatement(s12);
-                                                pst7.setInt(1,like);
-                                                pst7.setInt(2,mid);
+                                                pst7.setInt(1, like);
+                                                pst7.setInt(2, mid);
                                                 int u7 = pst.executeUpdate();
-                                                System.out.println((u7>0)?"sucess":"fail");
+                                                System.out.println((u7 > 0) ? "sucess" : "fail");
                                             }
 
 
@@ -270,16 +265,15 @@ public class OTT_PLATFORM {
                                         }
 
                                     }
-                                } else if (user_choice==3) {
+                                } else if (user_choice == 3) {
                                     System.out.println("=====================history======================");
-                                    String r = "SELECT * FROM history WHERE user_id="+ u.user_id;
+                                    String r = "SELECT * FROM history WHERE user_id=" + u.user_id;
                                     Statement s3 = con.createStatement();
                                     ResultSet rs = s3.executeQuery(r);
-                                    while (rs.next())
-                                    {
-                                        System.out.println(rs.getInt(1)+"\n"+rs.getString(2)+"\n"+rs.getLong(3)+"\n"+rs.getString(4));
+                                    while (rs.next()) {
+                                        System.out.println(rs.getInt(1) + "\n" + rs.getString(2) + "\n" + rs.getLong(3) + "\n" + rs.getString(4));
                                     }
-                                }else if (user_choice == 5) {
+                                } else if (user_choice == 5) {
                                     System.out.println("----------- Subscription Section -----------");
                                     System.out.println("1. Subscribe to a Plan");
                                     System.out.println("2. View My Subscription");
@@ -362,7 +356,6 @@ public class OTT_PLATFORM {
                                         System.out.println("❌ Invalid subscription option.");
                                     }
                                 }
-
 
 
                             }
@@ -558,8 +551,8 @@ public class OTT_PLATFORM {
                                             System.out.println("like : " + like);
                                             System.out.println("dislike : " + dislike);
                                             System.out.println("---------------------------------------------------------");
-                                            Movie m = new Movie(id,title,lang,cat,path,dur,like,dislike);
-                                            LinkedList<Movie> l= new LinkedList<>();
+                                            Movie m = new Movie(id, title, lang, cat, path, dur, like, dislike);
+                                            LinkedList<Movie> l = new LinkedList<>();
                                             l.add(m);
                                         }
                                     } else if (moviechoice == 5) {
