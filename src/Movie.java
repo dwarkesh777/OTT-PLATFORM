@@ -2,26 +2,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Movie {
-    String movieId, title, language, category;
+    int movieId;
+    String  title, language, category;
     int likes = 0, dislikes = 0;
     List<Review> reviews = new ArrayList<>();
     String videoPath;
     String duration;
 
-    Movie(String movieId, String title, String category, String language, String videoPath, String duration) {
+    public Movie(int movieId, String title, String language, String category, String videoPath, String duration, int likes, int dislikes) {
         this.movieId = movieId;
         this.title = title;
-        this.category = category;
         this.language = language;
+        this.category = category;
         this.videoPath = videoPath;
         this.duration = duration;
+        this.likes = likes;
+        this.dislikes = dislikes;
     }
 
-    public String getMovieId() {
+    public int getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(String movieId) {
+    public void setMovieId(int movieId) {
         this.movieId = movieId;
     }
 

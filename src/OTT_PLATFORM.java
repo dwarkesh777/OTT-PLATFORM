@@ -177,7 +177,7 @@ public class OTT_PLATFORM {
                     System.out.println("Enter Your Password:");
                     String pass = sc.next();
                     System.out.println("Enter mobile no");
-                    Long l = sc.nextLong();
+                    Long no = sc.nextLong();
                     int otp = 100000 + new Random().nextInt(900000);
                     System.out.println("🔐 OTP Sent: " + otp);
                     System.out.print("Enter OTP: ");
@@ -187,6 +187,10 @@ public class OTT_PLATFORM {
                     for (user u : hm.values()) {
                         if (u.getEmail().equals(mail) && u.getPassword().equals(pass) && (otp == entered)) {
                             System.out.println("✅ Login successful. Welcome, " + u.getFirst_name());
+                            String s = "INSERT INTO login (userID)VALUES (?)";
+                            PreparedStatement p = con.prepareStatement(s);
+                            p.setLong(1,no);
+                            p.executeUpdate();
                             //user code
                             while (true)
                             {
@@ -219,7 +223,8 @@ public class OTT_PLATFORM {
                                         System.out.println("===========================");
                                         Boolean  bm = ans.equalsIgnoreCase("yes");
                                         if(bm)
-                                        {  LocalDate today = LocalDate.now();
+                                        {
+                                            LocalDate today = LocalDate.now();
 
                                             // Format to YYYY-MM-DD
                                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -234,12 +239,29 @@ public class OTT_PLATFORM {
                                             // Format to HH:mm:ss
                                             DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm:ss");
                                             String formattedTime = currentTime.format(formatter1);
-                                            String s2 = "INSERT INTO history (time,user_id,date)VALUES(?,?,?) ";
-                                          PreparedStatement pst = con.prepareStatement(s2);
-                                          pst.setString(1, formattedTime);
-                                          pst.setLong(2,l);
-                                          pst.setString(3,formattedDate);
-                                          int r = pst.executeUpdate();
+                                            String s2 = "INSERT INTO history (time,user_id,date,content_name)VALUES(?,?,?,?) ";
+                                            PreparedStatement pst = con.prepareStatement(s2);
+                                            pst.setString(1, formattedTime);
+                                            pst.setLong(2,no);
+                                            pst.setString(3,formattedDate);
+                                            pst.setString(4,rs.getString(2));
+                                            int r = pst.executeUpdate();
+                                            System.out.println("DO YOU WANT TO LIKE THIS MOVIE (Yes/No)");
+                                            String ans1 = sc.next();
+                                            Boolean  bm1 = ans1.equalsIgnoreCase("yes");
+                                            if (bm1)
+                                            {
+                                                String s12 = "UPDATE movie SET like =? where movie_id=?";
+                                                int like = rs.getInt(7)+1;
+                                                int mid  = rs.getInt(1);
+                                                PreparedStatement pst7 = con.prepareStatement(s12);
+                                                pst7.setInt(1,like);
+                                                pst7.setInt(2,mid);
+                                                int u7 = pst.executeUpdate();
+                                                System.out.println((u7>0)?"sucess":"fail");
+                                            }
+
+
                                             //  Statement t = con.createStatement();
                                             //int r  =  t.executeUpdate(s2);
                                             //System.out.println((r>0)?"successfuly add in history":"fail");
@@ -250,8 +272,8 @@ public class OTT_PLATFORM {
                                 } else if (user_choice==3) {
                                     System.out.println("=====================history======================");
                                     String r = "SELECT * FROM history WHERE user_id="+ u.user_id;
-                                    Statement s = con.createStatement();
-                                    ResultSet rs = s.executeQuery(r);
+                                    Statement s3 = con.createStatement();
+                                    ResultSet rs = s3.executeQuery(r);
                                     while (rs.next())
                                     {
                                         System.out.println(rs.getInt(1)+"\n"+rs.getString(2)+"\n"+rs.getLong(3)+"\n"+rs.getString(4));
@@ -440,13 +462,21 @@ public class OTT_PLATFORM {
                                             String lang = rs.getString("movie_language");
                                             String cat = rs.getString("category");
                                             String dur = rs.getString("duration");
+                                            int like = rs.getInt("like");
+                                            int dislike = rs.getInt("dislike");
+                                            String path = rs.getString("video_path");
 
                                             System.out.println("Movie ID : " + id);
                                             System.out.println("Title : " + title);
                                             System.out.println("language : " + lang);
                                             System.out.println("categoty : " + cat);
                                             System.out.println("duration : " + dur);
+                                            System.out.println("like : " + like);
+                                            System.out.println("dislike : " + dislike);
                                             System.out.println("---------------------------------------------------------");
+                                            Movie m = new Movie(id,title,lang,cat,path,dur,like,dislike);
+                                            LinkedList<Movie> l= new LinkedList<>();
+                                            l.add(m);
                                         }
                                     } else if (moviechoice == 5) {
                                         System.out.println("Exiting");
