@@ -566,7 +566,7 @@ public class OTT_PLATFORM {
                         }
 
                         if (!found) {
-                            System.out.println("❌ Invalid credentials or OTP!");
+                            System.out.println("❌ Invalid credentials or OTP! ");
                         }
                     } else if (A_choice == 3) {
                         break;
@@ -574,10 +574,7 @@ public class OTT_PLATFORM {
                         System.out.println("❌ Invalid choice. Try again.");
                     }
                 }
-
             }
-
-
         }
 
     }
