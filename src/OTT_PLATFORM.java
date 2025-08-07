@@ -95,7 +95,7 @@ public class OTT_PLATFORM {
                         System.out.println("Enter Your 10 Mobile Digit number ");
                         number = sc.nextLong();
                         if (number >= 6000000000L && number <= 9999999999L) break;
-                        else System.out.println("❌ Invalid number!");
+                        else System.out.println(" Invalid number!");
                     }
 
                     String email;
@@ -103,7 +103,7 @@ public class OTT_PLATFORM {
                         System.out.println("Enter Your Email ");
                         email = sc.next();
                         if (email.endsWith("@gmail.com")) break;
-                        else System.out.println("❌ Email must end with @gmail.com");
+                        else System.out.println(" Email must end with @gmail.com");
                     }
 
                     int age;
@@ -118,7 +118,7 @@ public class OTT_PLATFORM {
                         System.out.print("Enter your password: ");
                         password = sc.next();
                         if (password.length() < 8) {
-                            System.out.println("❌ Too short.");
+                            System.out.println(" Too short.");
                             continue;
                         }
 
@@ -132,10 +132,10 @@ public class OTT_PLATFORM {
                         }
 
                         if (hasUpper && hasLower && hasDigit && hasSpecial) {
-                            System.out.println("✅ Strong password!");
+                            System.out.println(" Strong password!");
                             break;
                         } else {
-                            System.out.println("❌ Weak password.");
+                            System.out.println(" Weak password.");
                         }
                     }
 
@@ -170,7 +170,7 @@ public class OTT_PLATFORM {
                             hm.put(id, u);
                         }
                     } catch (Exception e) {
-                        System.out.println("❌ Error loading user data: " + e.getMessage());
+                        System.out.println(" Error loading user data: " + e.getMessage());
                     }
 
                     System.out.println("Enter Your Email:");
@@ -187,7 +187,7 @@ public class OTT_PLATFORM {
                     boolean found = false;
                     for (user u : hm.values()) {
                         if (u.getEmail().equals(mail) && u.getPassword().equals(pass) && (otp == entered)) {
-                            System.out.println("✅ Login successful. Welcome, " + u.getFirst_name());
+                            System.out.println("] Login successful. Welcome, " + u.getFirst_name());
                             String s = "INSERT INTO login (userID)VALUES (?)";
                             PreparedStatement p = con.prepareStatement(s);
                             p.setLong(1, no);
@@ -293,7 +293,7 @@ public class OTT_PLATFORM {
                                         } else if (planType.equalsIgnoreCase("Ultra")) {
                                             price = 599;
                                         } else {
-                                            System.out.println("❌ Invalid plan type.");
+                                            System.out.println(" Invalid plan type.");
                                             return;
                                         }
 
@@ -318,12 +318,12 @@ public class OTT_PLATFORM {
 
                                             int rows = pstmt.executeUpdate();
                                             if (rows > 0) {
-                                                System.out.println("✅ Subscription added successfully.");
+                                                System.out.println(" Subscription added successfully.");
                                             } else {
-                                                System.out.println("❌ Failed to add subscription.");
+                                                System.out.println(" Failed to add subscription.");
                                             }
                                         } catch (SQLException e) {
-                                            System.out.println("❌ Error: " + e.getMessage());
+                                            System.out.println(" Error: " + e.getMessage());
                                         }
 
                                     } else if (subChoice == 2) {
@@ -347,13 +347,13 @@ public class OTT_PLATFORM {
                                                 System.out.println(sub);
                                             }
                                             if (!found1) {
-                                                System.out.println("❌ No active subscription found.");
+                                                System.out.println(" No active subscription found.");
                                             }
                                         } catch (SQLException e) {
-                                            System.out.println("❌ Error fetching subscription: " + e.getMessage());
+                                            System.out.println(" Error fetching subscription: " + e.getMessage());
                                         }
                                     } else {
-                                        System.out.println("❌ Invalid subscription option.");
+                                        System.out.println(" Invalid subscription option.");
                                     }
                                 }
 
@@ -364,7 +364,7 @@ public class OTT_PLATFORM {
                         }
                     }
                     if (!found) {
-                        System.out.println("❌ Invalid credentials!");
+                        System.out.println(" Invalid credentials!");
                     }
                 }
             }
@@ -378,7 +378,7 @@ public class OTT_PLATFORM {
                     int A_choice = sc.nextInt();
 
                     if (A_choice == 1) {
-                        // ✅ Admin Signup
+                        //  Admin Signup
                         System.out.println("Enter full name:");
                         String name = sc.next();
 
@@ -387,7 +387,7 @@ public class OTT_PLATFORM {
                             System.out.println("Enter Your 10-digit Mobile Number: ");
                             number1 = sc.nextLong();
                             if (number1 >= 6000000000L && number1 <= 9999999999L) break;
-                            else System.out.println("❌ Invalid number!");
+                            else System.out.println(" Invalid number!");
                         }
 
                         String email1;
@@ -395,7 +395,7 @@ public class OTT_PLATFORM {
                             System.out.println("Enter Your Email: ");
                             email1 = sc.next();
                             if (email1.endsWith("@gmail.com")) break;
-                            else System.out.println("❌ Email must end with @gmail.com");
+                            else System.out.println(" Email must end with @gmail.com");
                         }
 
                         String password1;
@@ -403,7 +403,7 @@ public class OTT_PLATFORM {
                             System.out.print("Enter your password: ");
                             password1 = sc.next();
                             if (password1.length() < 8) {
-                                System.out.println("❌ Too short.");
+                                System.out.println(" Too short.");
                                 continue;
                             }
 
@@ -416,10 +416,10 @@ public class OTT_PLATFORM {
                             }
 
                             if (hasUpper1 && hasLower1 && hasDigit1 && hasSpecial1) {
-                                System.out.println("✅ Strong password!");
+                                System.out.println(" Strong password!");
                                 break;
                             } else {
-                                System.out.println("❌ Weak password.");
+                                System.out.println(" Weak password.");
                             }
                         }
 
@@ -432,9 +432,9 @@ public class OTT_PLATFORM {
                             String sql10 = "INSERT INTO admin VALUES(" + Admin_id1 + ",'" + name + "','" + email1 + "','" + password1 + "')";
                             Statement s = con.createStatement();
                             s.executeUpdate(sql10);
-                            System.out.println("✅ Admin Registered & Added to DB.");
+                            System.out.println(" Admin Registered & Added to DB.");
                         } catch (Exception e) {
-                            System.out.println("❌ Error inserting into admin table: " + e.getMessage());
+                            System.out.println(" Error inserting into admin table: " + e.getMessage());
                         }
                     } else if (A_choice == 2) {
                         //  Load admins from DB first
@@ -451,7 +451,7 @@ public class OTT_PLATFORM {
                                 hmu.put(id, adminObj);
                             }
                         } catch (Exception e) {
-                            System.out.println("❌ Error loading admin data: " + e.getMessage());
+                            System.out.println(" Error loading admin data: " + e.getMessage());
                         }
 
                         //  Login Logic
@@ -468,7 +468,7 @@ public class OTT_PLATFORM {
                         boolean found = false;
                         for (Admin a1 : hmu.values()) {
                             if (a1.getEmail().equals(mail1) && a1.getAdmin_password().equals(pass1) && otp2 == entered) {
-                                System.out.println("✅ Login successful. Welcome, " + a1.admin_name);
+                                System.out.println(" Login successful. Welcome, " + a1.admin_name);
                                 while (true) {
                                     System.out.println("\n-----MOVIES-----");
                                     System.out.println("1.insert movie");
@@ -491,7 +491,7 @@ public class OTT_PLATFORM {
                                             stmt.executeUpdate(insertMovieSQL);
                                         }
 
-                                        System.out.println("✅ 25 Predefined Movies Inserted Successfully!");
+                                        System.out.println(" 25 Predefined Movies Inserted Successfully!");
                                     } else if (moviechoice == 2) {
                                         System.out.print("Enter movie ID to update: ");
                                         int movieIdToUpdate = sc.nextInt();
@@ -508,8 +508,8 @@ public class OTT_PLATFORM {
                                         int rows = pstmt.executeUpdate();
 
                                         if (rows > 0)
-                                            System.out.println("✅ Movie ID " + movieIdToUpdate + " updated to: " + newTitle);
-                                        else System.out.println("❌ Movie ID not found.");
+                                            System.out.println(" Movie ID " + movieIdToUpdate + " updated to: " + newTitle);
+                                        else System.out.println(" Movie ID not found.");
                                     } else if (moviechoice == 3) {
                                         System.out.print("Enter movie ID to delete: ");
                                         int movieIdToDelete = sc.nextInt();
@@ -521,9 +521,9 @@ public class OTT_PLATFORM {
                                         int r = pst.executeUpdate();
 
                                         if (r > 0) {
-                                            System.out.println("✅ Movie ID " + movieIdToDelete + " Deleted");
+                                            System.out.println(" Movie ID " + movieIdToDelete + " Deleted");
                                         } else {
-                                            System.out.println("❌ Movie ID not found. ");
+                                            System.out.println(" Movie ID not found. ");
                                         }
                                     } else if (moviechoice == 4) {
                                         String fetchSQL = "SELECT * FROM movie";
@@ -566,12 +566,12 @@ public class OTT_PLATFORM {
                         }
 
                         if (!found) {
-                            System.out.println("❌ Invalid credentials or OTP! ");
+                            System.out.println(" Invalid credentials or OTP! ");
                         }
                     } else if (A_choice == 3) {
                         break;
                     } else {
-                        System.out.println("❌ Invalid choice. Try again.");
+                        System.out.println(" Invalid choice. Try again.");
                     }
                 }
             }
