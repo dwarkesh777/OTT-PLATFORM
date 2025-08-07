@@ -199,11 +199,14 @@ public class OTT_PLATFORM {
                                 System.out.println("3.History");
                                 System.out.println("4.Top Rating Movie And Series");
                                 System.out.println("5.Subscription detail");
-                                System.out.println("6.exit");
+                                System.out.println("6.Update Profile");
+                                System.out.println("0.exit");
                                 int user_choice = sc.nextInt();
-                                if (user_choice == 6) {
+                                if (user_choice == 0) {
                                     System.out.println("Exiting");
                                     break;
+                                } else if (user_choice==6) {
+                                    String sql = "SELECT * FROM user";
                                 } else if (user_choice == 1) {
                                     System.out.println("Thank You For selecting Movie");
                                     String s1 = "SELECT * FROM movie";
